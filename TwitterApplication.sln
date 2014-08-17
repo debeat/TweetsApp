@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.21005.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwitterApplication", "TwitterApplication\TwitterApplication.csproj", "{38CA0B6F-E429-411D-AD5E-C4109248A259}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		CCNET|Any CPU = CCNET|Any CPU
+		Debug|Any CPU = Debug|Any CPU
+		Mono-Debug|Any CPU = Mono-Debug|Any CPU
+		Mono-Release|Any CPU = Mono-Release|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{38CA0B6F-E429-411D-AD5E-C4109248A259}.CCNET|Any CPU.ActiveCfg = Release|Any CPU
+		{38CA0B6F-E429-411D-AD5E-C4109248A259}.CCNET|Any CPU.Build.0 = Release|Any CPU
+		{38CA0B6F-E429-411D-AD5E-C4109248A259}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38CA0B6F-E429-411D-AD5E-C4109248A259}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38CA0B6F-E429-411D-AD5E-C4109248A259}.Mono-Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38CA0B6F-E429-411D-AD5E-C4109248A259}.Mono-Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38CA0B6F-E429-411D-AD5E-C4109248A259}.Mono-Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38CA0B6F-E429-411D-AD5E-C4109248A259}.Mono-Release|Any CPU.Build.0 = Release|Any CPU
+		{38CA0B6F-E429-411D-AD5E-C4109248A259}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38CA0B6F-E429-411D-AD5E-C4109248A259}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

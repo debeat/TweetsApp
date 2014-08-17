@@ -1,0 +1,115 @@
+﻿@model IEnumerable<TwitterApplication.Models.TweetsInfo>
+@{
+    ViewBag.Title = "Twitter #ACME Tracker";
+}
+@using TweetSharp;
+
+@section featured {
+    <section class="featured">
+        <div class="content-wrapper">
+            <hgroup class="title">
+                <h1>@ViewBag.Title</h1>
+            </hgroup>
+            <p>
+                This application represents a way of showing statistics about a Twitter hashtag (#ACME) and locating the tweets on Google Maps as well as displaying the top 10 contributors on Google PieChart
+            </p>
+        </div>
+    </section>
+}
+
+<!-- This <div> is used to view a tweet in a Twitter hashtag widget -->
+
+<div class="TweetsWidgetDiv">
+    <a class="twitter-timeline" href="https://twitter.com/hashtag/ACME" data-widget-id="500443416560271362">#ACME Tweets</a>
+    <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],p=/^http:/.test(d.location)?'http':'https';if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src=p+"://platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
+</div>
+
+<!-- This <div> is used to view a tweet in a Twitter tweet widget -->
+@*<div class="TweetsEmbedDiv">
+        @if (Model != null)
+        {
+            foreach (var tweet in Model)
+            {
+                <blockquote class="twitter-tweet" lang="en"><p>@tweet.TweetText <a href="https://twitter.com/hashtag/acme?src=hash">#acme</a></p>&mdash; @tweet.Useritem.Name <a href="https://twitter.com/@tweet.Useritem.ScreenName/statuses/@tweet.TweetID">@tweet.CreationDate</a></blockquote>
+                <script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+            }
+        }
+    </div>*@
+
+<!-- This <div> is used to view a tweet in a customized designe-->
+@*<div class="TweetsDiv">
+        @if (Model != null)
+        {
+            foreach (var tweet in Model)
+            {
+                <div class="tweet_item">
+                    <img src="@tweet.Useritem.ProfileImageUrl" alt="@tweet.Useritem.ScreenName" title="@tweet.Useritem.ScreenName" />
+                    <h3>@tweet.Useritem.Name</h3>
+                    <p href="https://twitter.com/statuses/@tweet.TweetID" class="tweet">@tweet.TweetText</p>
+                    <p class="meta"> <span>@tweet.CreationDate.AddHours(3).ToString("d/M/yyyy HH:mm:ss")</span></p>
+                </div>
+            }
+        }
+    </div>*@
+
+<div class="MapDiv">
+    <div id="map_canvas" style="height: 320px;"></div>
+    <script type="text/javascript">
+    $(document).ready(function () {
+        Initialize();
+    });
+    function Initialize() {
+        google.maps.visualRefresh = true;
+        var Mecca = new google.maps.LatLng(21.4360154, 39.8465466);
+        var mapOptions = {
+            zoom: 1,
+            center: Mecca,
+            mapTypeId: google.maps.MapTypeId.G_NORMAL_MAP
+        };
+        var map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+        var mapData = '@ViewBag.MapData';
+        mapData = mapData.replace(/&quot;/g, '"');
+        mapData = JSON.parse(mapData);
+        $.each(mapData, function (i, item) {
+            var marker = new google.maps.Marker({
+                'position': new google.maps.LatLng(item.longtude, item.latitude),
+                'map': map,
+                'title': item.UserLink
+            });
+            marker.setIcon('http://maps.google.com/mapfiles/ms/icons/blue-dot.png')
+            var infowindow = new google.maps.InfoWindow({
+                content: "<div class='infoDiv'><h2>" + item.UserName + "</h2>"
+            });
+            google.maps.event.addListener(marker, 'click', function () {
+                infowindow.open(map, marker);
+            });
+        })
+    }
+    </script>
+</div>
+
+<div class="ChartDiv">
+    <div id="piechart" style="width: 424px; height: 320px;"></div>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+        google.load("visualization", "1", {packages:["corechart"]});
+        google.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var chartData = '@ViewBag.ChartData';
+            chartData = chartData.replace(/&quot;/g, '"');
+            chartData = JSON.parse(chartData);
+            var dataTable = new google.visualization.DataTable();
+            dataTable.addColumn('string', 'Contributor');
+            dataTable.addColumn('number', 'Tweets Amount');
+            $.each(chartData, function (i, item) {
+                dataTable.addRow([item.UserScreenName, item.UserTweetsAmount]);
+            })
+            var options = {
+                title: 'Top 10 Contributors'
+            };
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+            chart.draw(dataTable, options);
+        }
+    </script>
+</div>
+
